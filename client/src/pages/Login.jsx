@@ -25,7 +25,7 @@ const Login = () => {
           id: response.data.id,
           status: true,
         });*/
-        navigate("/addProduct");
+        navigate("/addPost");
         console.log("TEST SUCCESSFUL")
       }
     });
