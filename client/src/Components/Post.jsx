@@ -3,7 +3,7 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const Post = ({ post }) => {
+const ProductCard = ({ post }) => {
     return (
         <>
 

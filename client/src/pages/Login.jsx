@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import { Container, Form, Button } from 'react-bootstrap'
 import { TextField } from '@mui/material'
+import Navbar from '../Components/Navbar'
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -35,6 +36,7 @@ const Login = () => {
   return (
     <>
         <Container className='mt-5 p-2'>
+            <Navbar></Navbar>
             <h1>Login</h1>
             <hr />
             <TextField margin="normal" fullWidth variant="standard" label="Username"
