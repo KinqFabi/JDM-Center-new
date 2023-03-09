@@ -1,4 +1,8 @@
 import React from 'react'
+import { useEffect,useState } from 'react';
+import axios from 'axios';
+
+
 import styled from 'styled-components'
 import {COLORS} from '../helpers/Colors'
 import { alpha } from '@mui/material/styles';
@@ -61,6 +65,20 @@ const Navbar = () => {
     `;  
 
 
+    //TODO: Move this code into seperate Profile.jsx file
+
+    const [user, setUser] = useState([])
+
+    useEffect(() => {
+        const getUser = async () => {
+            const {data} = await axios.get(`https://localhost:3001/api/users/${user.id}`)
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            console.log(data)
+            setUser(data)
+        }
+        getUser()
+    }, [])
+
     return (
         <>
             <Nav>
@@ -86,7 +104,7 @@ const Navbar = () => {
                     //marginRight: '5rem',
                     }}>
                         <HomeIcon sx={{
-                            fontSize: '2.5rem'
+                            fontSize: '2rem'
                         }} />
                     </IconButton>
 
@@ -95,7 +113,7 @@ const Navbar = () => {
                   //  marginRight: '5rem',
                     }}>
                         <QuestionAnswerIcon sx={{
-                            fontSize: '2.5rem'
+                            fontSize: '2rem'
                         }} />
 
                     </IconButton>
@@ -103,9 +121,9 @@ const Navbar = () => {
                     sx={{alignItems: 'flex-end',
                   //  marginRight: '5rem',
                     }}>
-                     <Avatar alt="Remy Sharp" src="../Images/sampleAvatar.jfif"
+                     <Avatar alt="Remy Sharp" src={user.userPicture}
                      sx={{
-                        fontSize: '2.5rem'
+                        fontSize: '2rem'
                      }} />
                     </IconButton>
                 </LeftIcons>

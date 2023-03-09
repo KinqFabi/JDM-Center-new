@@ -7,7 +7,7 @@ const router = require('express').Router()
 
 
 // use routers
-router.post('/createUser', userController.createUser)
+router.post('/createUser',userController.upload , userController.createUser)
 
 router.get('/allUsers', userController.getAllUsers)
 

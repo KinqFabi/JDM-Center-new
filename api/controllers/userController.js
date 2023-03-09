@@ -1,6 +1,6 @@
 const dbCofing = require("../config/dbConfig.js");
 const multer = require("multer");
-const path = require("path");
+
 
 const { Sequelize, DataTypes } = require("sequelize");
 
@@ -55,10 +55,12 @@ const User = db.users;
 // creating a user
 
 const bcrypt = require("bcrypt");
+const path = require("path");
+const hash = require("random-hash");
 
 const createUser = (req, res) => {
   // async weg gemamacht!!!
-
+  const relativePath = path.relative(process.cwd(), req.file.path);
   const { password } = req.body;
   bcrypt.hash(password, 10).then(async (hash) => {
     let userValues = {
@@ -66,7 +68,7 @@ const createUser = (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      userPicture: req.body.userPicture,
+      userPicture: relativePath,
       password: hash,
     };
     const user = await User.create(userValues); // await weg gemamacht!!!
@@ -121,13 +123,18 @@ const getUserPosts = async (req, res) => {
 // 8. Upload Image Controller
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "Images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
+    destination: (req, file, callback) => { //this is storing the file in the images folder
+        callback(null, path.join(__dirname, '../Images'));
+    },
+
+    filename: (req, file, callback) => { //this is just setting a unique filename
+        let temp = file.originalname.split('.');
+        const filename = temp[0] + '-' + hash.generateHash({length: 5}) + '.' + temp[1]
+        callback(null, filename);
+    }
 });
+
+
 
 const upload = multer({
   storage: storage,
@@ -142,7 +149,7 @@ const upload = multer({
     }
     cb("Give proper files formate to upload");
   },
-}).single("image");
+}).single("userPicture");
 
 module.exports = {
   createUser,
