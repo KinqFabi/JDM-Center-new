@@ -12,6 +12,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
 import MUIButton from '@mui/material/Button';
 
+import styled from 'styled-components'
+
 const Register = () => {
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
@@ -41,15 +43,23 @@ const Register = () => {
     });
 
 
-
+    const Centered = styled.div`
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      `;
+   
   };
   return (
     <>
+    
       <Box className='mt-5 p-2'
             direction="row"
             justifyContent="center"
             alignItems="center"
-            m = "auto"
+            marginLeft={'auto'}
+            
       >
          <Grid container spacing={2}
             direction="row"
@@ -158,6 +168,7 @@ const Register = () => {
             </Grid>
          </Grid>
       </Box>
+      
     </>
 
   );  
