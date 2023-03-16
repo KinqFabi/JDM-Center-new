@@ -26,7 +26,8 @@ const Login = () => {
           id: response.data.id,
           status: true,
         });*/
-        navigate("/addPost");
+        axios.get("http://localhost:3001/api/cookies/setCookie/RAAA");
+       // navigate("/addPost");
         console.log("TEST SUCCESSFUL")
       }
     });

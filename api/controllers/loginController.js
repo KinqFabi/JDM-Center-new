@@ -37,13 +37,22 @@ db.users = require('../models/userModel')(sequelize, DataTypes)
 const login = async (req, res) => {
    // const { username, password } = req.body;
 
+   const { userId } = req.body
+   const token = jwt.sign({ userId }, process.env.MY_SECRET, { expiresIn: '1h' })
+   console.log(token)
+   return res.cookie("token", token, {
+        expiresIn: '1h',
+        httpOnly: true,
+        secure: true
+    }).status(200).json({ message: "TOKEN SUCCESSULL ADSFAFDSFAFDSFSAFSFA" })
+
    
-    let {token} = req.cookies;
+    /*let {token} = req.cookies;
 
     // make sure token exists
-   /* if (!token){
+    if (!token){
         return console.log("no token");
-    }*/
+    }
 
     const options = {
         httpOnly: true,
@@ -54,7 +63,7 @@ const login = async (req, res) => {
     res
     .status(200)
     .cookie('token', token, options )
-    .json({success: true, token})
+    .json({success: true, token})*/
   /*  const userToLogin = await db.users.findOne({ where: { username: username } });
 
     if(!userToLogin) {

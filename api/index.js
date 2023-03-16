@@ -24,6 +24,9 @@ app.use('/api/users', userRouter)
 const loginRouter = require('./routes/loginRouter.js')
 app.use('/api/auth', loginRouter)
 
+const cookieRouter = require('./routes/cookieRouter.js')
+app.use('/api/cookies', cookieRouter)
+
 //static Images Folder
 
 app.use('/Images', express.static('./Images')) 
