@@ -7,12 +7,15 @@ const cookieParser = require('cookie-parser')
 const app = express()
 
 // middleware
-
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", true);
+    next();
+})
 app.use(express.json())
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
+//app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 // routers
 const router = require('./routes/postRouter.js')

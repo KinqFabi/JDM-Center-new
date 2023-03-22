@@ -5,6 +5,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import { Container, Form, Button } from 'react-bootstrap'
 import { TextField } from '@mui/material'
 import Navbar from '../Components/Navbar'
+import MButton from '@mui/material/Button';
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -14,26 +15,32 @@ const Login = () => {
   let navigate = useNavigate();
 
   const login = () => {
-    const data = { username: username, password: password };
-    axios.post("http://localhost:3001/api/auth/login", data).then((response) => {
+
+
+
+    const input = { username: username, password: password };
+    axios.post("http://localhost:3001/api/auth/login/", input, {withCredentials: true,}).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
-        //<Alert severity="error">{response.data.error}</Alert>
       } else {
-     /*   localStorage.setItem("accessToken", response.data.token);
+        console.log(response.data);
         setAuthState({
           username: response.data.username,
           id: response.data.id,
           status: true,
-        });*/
-        axios.get("http://localhost:3001/api/cookies/setCookie/RAAA");
-       // navigate("/addPost");
-        console.log("TEST SUCCESSFUL")
+        });
+
       }
     });
 
 
+
+
   };
+
+  const logout = () => {
+    axios.get("http://localhost:3001/api/auth/logout", {withCredentials: true,})
+  }
   return (
     <>
         <Container className='mt-5 p-2'>
@@ -50,7 +57,8 @@ const Login = () => {
             setPassword(e.target.value);
             }}></TextField>
 
-            <Button onClick={login} variant="primary" type="submit" >Login</Button>
+            <MButton onClick={login} variant="primary" type="submit" >Login</MButton>
+            <MButton onClick={logout} variant="primary" type="submit" >Logout</MButton>
         </Container>
     </>
 

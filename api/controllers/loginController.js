@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 require('express')
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const router = require('express').Router();
+const { validateToken } = require('../middlewares/AuthMiddleware.js');
 
 const dbCofing = require('../config/dbConfig.js');
 
@@ -35,67 +37,59 @@ db.sequelize = sequelize;
 db.users = require('../models/userModel')(sequelize, DataTypes)
 
 const login = async (req, res) => {
-   // const { username, password } = req.body;
+    const { username, password } = req.body;
 
-   const { userId } = req.body
-   const token = jwt.sign({ userId }, process.env.MY_SECRET, { expiresIn: '1h' })
-   console.log(token)
-   return res.cookie("token", token, {
-        expiresIn: '1h',
-        httpOnly: true,
-        secure: true
-    }).status(200).json({ message: "TOKEN SUCCESSULL ADSFAFDSFAFDSFSAFSFA" })
-
-   
-    /*let {token} = req.cookies;
-
-    // make sure token exists
-    if (!token){
-        return console.log("no token");
-    }
-
-    const options = {
-        httpOnly: true,
-        expires: new Date(Date.now() + 900000),
-    };
-    token = "test";
-
+    const userToLogin = await db.users.findOne({ where: { username: username } });
+    const token = jwt.sign(userToLogin.username , process.env.MY_SECRET);
+    //return res.cookie("TEST COOKIE", "Test Cookies", { maxAge: 900000, httpOnly: true })
+    //return res.cookie("accessToken", token, {maxAge: 999999,httpOnly: true}).status(200);
+    //return res.status(200).send(token);
     res
-    .status(200)
-    .cookie('token', token, options )
-    .json({success: true, token})*/
-  /*  const userToLogin = await db.users.findOne({ where: { username: username } });
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .status(200)
+      .send(token);
 
+ /*  const userToLogin = await db.users.findOne({ where: { username: username } });
     if(!userToLogin) {
         return res.status(404).send('User not found');
-    }
-
-    const token = "123"
-    res.cookie("token", token, {
-        httpOnly: true,
-        secure: true
-    });
-
-
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    console.log(userToLogin);
-
-    bcrypt.compare(password, userToLogin.password).then(async (match) => {
-        if (!match) res.json({ error: "Wrong Username And Password Combination" });
-        const token = jwt.sign(userToLogin.toJSON() , process.env.MY_SECRET, {expiresIn: '1h'});
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: true
-            });
-        res.json({ message: "Login Successful", user: userToLogin });
-      });*/
+    }   
+    else {
+        bcrypt.compare(password, userToLogin.password).then(async (match) => {
+            if (!match) res.json({ error: "Wrong Username And Password Combination" });
+            const token = jwt.sign(userToLogin.username , process.env.MY_SECRET);
+            res.cookie("accessToken", token, {
+              httpOnly: true
+            }).status(200)
+            .json({ message: "Login Successful", user: userToLogin });
+          //  res.json({ message: "Login Successful", user: userToLogin });
+          });      
+    */
 
 
+}; 
 
-};  
+  
+const logout = (req, res) => {
+  res
+    .clearCookie("accessToken", {
+      secure: true,
+      sameSite: "none",
+    })
+    .status(200)
+    .json("User has been logged out.");
+};
+
+const auth = (req, res) => {
+  res.status(200).json(req.user);
+};
 
 
 module.exports = {
-    login
-    
-}
+    login,
+    logout,
+    auth
+};

@@ -69,7 +69,7 @@ const Navbar = () => {
 
     const [user, setUser] = useState([])
 
-    useEffect(() => {
+  /*  useEffect(() => {
         const getUser = async () => {
             const {data} = await axios.get(`https://localhost:3001/api/users/${user.id}`)
             console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAA')
@@ -77,7 +77,7 @@ const Navbar = () => {
             setUser(data)
         }
         getUser()
-    }, [])
+    }, [])*/
 
     return (
         <>
@@ -121,7 +121,7 @@ const Navbar = () => {
                     sx={{alignItems: 'flex-end',
                   //  marginRight: '5rem',
                     }}>
-                     <Avatar alt="Remy Sharp" src={user.userPicture}
+                     <Avatar alt="Remy Sharp" /*src={user.userPicture}*/
                      sx={{
                         fontSize: '2rem'
                      }} />

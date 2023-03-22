@@ -1,18 +1,19 @@
 const { verify } = require("jsonwebtoken");
 
 const validateToken = (req, res, next) => {
-  const accessToken = req.header("accessToken");
-
-  if (!accessToken) return res.json({ error: "User not logged in!" });
-
+  const token = req.cookies.accessToken;
+  console.log("!SDAFSDAFSADFSDFASDFASDFSADFSADFSADFADSF");
+  console.log(token);
+  if (!token) {
+    console.log("OIDAAAAA NO TOKEN");
+    return res.status(401).json("You are not logged in");
+  }
   try {
-    const validToken = verify(accessToken, "importantsecret");
-    req.user = validToken;
-    if (validToken) {
-      return next();
-    }
+    const data = verify(token, process.env.MY_SECRET);
+    req.username = data.username;
+    return next();
   } catch (err) {
-    return res.json({ error: err });
+    return res.status(403).json("Invalid token");
   }
 };
 
