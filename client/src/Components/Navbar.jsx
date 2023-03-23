@@ -4,7 +4,6 @@ import axios from 'axios';
 
 
 import styled from 'styled-components'
-import {COLORS} from '../helpers/Colors'
 import { alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,10 +21,10 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 const Navbar = () => {
 
-    const Nav = styled.nav`
+   /* const Nav = styled.nav`
         width: 100%;
         height: 5rem;
-        background-color: ${COLORS.white};
+        background-color: ${COL};
         margin: 0;
         padding: 0;
         display: flex;
@@ -63,7 +62,7 @@ const Navbar = () => {
         wrap: wrap;
         margin-Right: 2rem;
     `;  
-
+*/
 
     //TODO: Move this code into seperate Profile.jsx file
 

@@ -10,10 +10,11 @@ const validateToken = (req, res, next) => {
   }
   try {
     const data = verify(token, process.env.MY_SECRET);
-    req.username = data.username;
+    req.username = data;
+    console.log(data)
     return next();
   } catch (err) {
-    return res.status(403).json("Invalid token");
+      return res.status(403).json("Invalid token");
   }
 };
 

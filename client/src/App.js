@@ -27,8 +27,8 @@ const App = () => {
   })
 
 
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/auth/auth", {withCredentials: true,}).then((response) => {
+  /*useEffect(() => {
+    axios.get("http://localhost:3001/api/auth/auth").then((response) => {
         if (response.data.error) {
             alert(response.data.error);
             setAuthState({...authState, status: false});
@@ -41,7 +41,7 @@ const App = () => {
             });
         }
     });
-}, [])
+}, [])*/
 
   return (
     <Router>

@@ -11,19 +11,25 @@ const Home = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { authState } = useContext(AuthContext);
-    const { setAuthState } = useContext(AuthContext);
+  const { setAuthState } = useContext(AuthContext);
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/auth/auth").then((response) => {
-        if (!response.ok) {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    axios.get("http://localhost:3001/api/auth/auth", {withCredentials: true}).then((response) => {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        console.log(response);
+        if (response.status == 401 || response.status == 403) {
             navigate("/login");
         } else {
         }
     });
 
+
+
 }, []);
+
 
   return (
     <>
