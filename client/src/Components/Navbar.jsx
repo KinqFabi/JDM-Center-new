@@ -76,11 +76,10 @@ const Navbar = () => {
             setUser(data)
         }
         getUser()
-    }, [])*/
-
-    return (
-        <>
-            <Nav>
+    }, [])
+    
+    
+                <Nav>
                 <Logo>JDM Center</Logo>
                 <Search>
                   <Paper
@@ -120,14 +119,18 @@ const Navbar = () => {
                     sx={{alignItems: 'flex-end',
                   //  marginRight: '5rem',
                     }}>
-                     <Avatar alt="Remy Sharp" /*src={user.userPicture}*/
+                     <Avatar alt="Remy Sharp" /*src={user.userPicture}
                      sx={{
                         fontSize: '2rem'
                      }} />
                     </IconButton>
                 </LeftIcons>
 
-            </Nav>
+            </Nav> */
+
+    return (
+        <>
+
         </>
     )   
 }
