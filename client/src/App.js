@@ -44,10 +44,10 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/addPost" element={<AddPost />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<Posts />} />
-        <Route path="/xx" element={<Home />} />
+        <Route path="/" element={<Home  /> } />
       </Routes>
     </Router>
   );

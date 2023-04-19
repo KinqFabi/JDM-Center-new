@@ -3,16 +3,21 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import { Container, Form, Button } from 'react-bootstrap'
-import { Grid, TextField } from '@mui/material'
+import { CircularProgress, Grid, TextField, Typography } from '@mui/material'
 import { Box } from "@mui/system";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import BadgeIcon from '@mui/icons-material/Badge';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
-import MUIButton from '@mui/material/Button';
-
-import styled from 'styled-components'
+import MButton from '@mui/material/Button';
+import { styled, ThemeProvider } from '@mui/material/styles';
+import theme from '../index.js'
+import { FormControl, InputLabel, OutlinedInput, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FilledInput from '@mui/material/FilledInput';
+import Link from "@mui/material/Link";
 
 const Register = () => {
    const [firstName, setFirstName] = useState("");
@@ -41,134 +46,195 @@ const Register = () => {
         console.log("TEST SUCCESSFUL")
       }
     });
-
-
-    const Centered = styled.div`
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      `;
    
   };
+
+  /********* Frontend for Register.jsx ***********/
+
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
+
+  const Background = styled('div')({
+    margin: '0',
+    padding: '0',
+    paddingTop: '80px',
+    background: 'linear-gradient(to right bottom, #e63946,#457b9d)',
+    height: '100vh',
+    width: '100vw',
+  });
+
   return (
-    <>
-    
-      <Box className='mt-5 p-2'
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            marginLeft={'auto'}
-            
-      >
-         <Grid container spacing={2}
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            width={'30vw'}
-            height={1}
-            border={1}
+    <>      
+          <Box
+            sx={{
+              margin: 0,
+              padding: 0,
+              paddingTop: '80px',
+              background: 'linear-gradient(to right bottom, #e63946,#457b9d)',
+              height: '100vh',
+              width: '100vw',
+            }}
+          >
+          <Box sx={{ display: 'flex', margin: 'auto', justifyContent: 'center' }}>
+            <Container id="img__container">
+            <Box id="signIn__box"
+              
+              sx={{
+                backgroundImage: "url(../../img/signInCar.jpg)",
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                width: '40vw',
+                height: '80vh'
+              }}
             >
-            <Grid item xs={12} sm={6}>
-            <TextField
-               
-               id="input-with-icon-textfield"
-               label="First Name"
-               onChange={(e) => {
-               setFirstName(e.target.value);
-               }}
-               InputProps={{
-                  startAdornment: (
-                     <InputAdornment position="start">
-                     <BadgeIcon />
-                     </InputAdornment>
-                  ),
-               }}
-               variant="outlined"
-            />
-            </Grid>
-            <Grid item sm={6} xs={12}>
-            <TextField
-               id="input-with-icon-textfield"
-               label="Last Name"
-               onChange={(e) => {
-               setLastName(e.target.value);
-               }}
-               InputProps={{
-                  startAdornment: (
-                     <InputAdornment position="start">
-                     <BadgeIcon />
-                     </InputAdornment>
-                  ),
-               }}
-               variant="outlined"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-               
-               id="input-with-icon-textfield"
-               label="Username"
-               onChange={(e) => {
-               setUsername(e.target.value);
-               }}
-               fullWidth
-               InputProps={{
-                  startAdornment: (
-                     <InputAdornment position="start">
-                     <AccountCircle />
-                     </InputAdornment>
-                  ),
-               }}
-               variant="outlined"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-               
-               id="input-with-icon-textfield"
-               label="E-Mail"
-               onChange={(e) => {
-               setEmail(e.target.value);
-               }}
-               fullWidth
-               InputProps={{
-                  startAdornment: (
-                     <InputAdornment position="start">
-                     <EmailIcon />
-                     </InputAdornment>
-                  ),
-               }}
-               variant="outlined"
-            />
-            </Grid>
-            <Grid item xs={12}>
-            <TextField
-               
-               id="input-with-icon-textfield"
-               label="Password"
-               onChange={(e) => {
-               setPassword(e.target.value);
-               }}
-               fullWidth
-               InputProps={{
-                  startAdornment: (
-                     <InputAdornment position="start">
-                     <HttpsIcon   />
-                     </InputAdornment>
-                  ),
-               }}
-               variant="outlined"
-            />
-            </Grid>
-            <Grid item xs={12}>
-               <MUIButton variant="contained" color="primary" onClick={register} fullWidth>
-                  Register
-               </MUIButton>
-            </Grid>
-         </Grid>
-      </Box>
-      
+              <Grid container>
+                <Grid item xs={12}>
+                <Box
+                            component="img"
+                            sx={{
+                            width: 'auto',
+                            maxHeight: { xs: '5rem', md: '8rem' },
+                            maxWidth: { xs: 350, md: 250 },
+                            padding: { xs: '0', md: '1rem' },
+                            }}
+                            alt="The house from the offer."
+                            src="../img/JdmLogo.png"
+                        />
+                </Grid>
+                <Grid item xs={12} sx={{display: "flex", justifyContent: "center"}}>
+                  <Typography variant="h2" gutterBottom color="common.white"
+                  sx={{marginTop: '8vh', letterSpacing: '5px'}}
+                  >
+                    Welcome!
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+
+            </Container>
+
+            <Container id="signIn__container">
+              <Box id="signIn__box"
+                sx={{
+                  background: 'white',
+                  width: '30vw',
+                  height: '80vh'
+                }}
+              >
+              <Grid container spacing={0}
+                  sx={{display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        }}>
+                    <Box
+                    className="vertical-center"
+                    sx={{display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: '10vh',
+                  }}
+                    >
+
+                    
+                    <Grid item xs={12}>
+                      <Typography variant="h4" sx={{marginBottom: '20px', textAlign: 'center'}}>Replace with Logo</Typography> 
+                    </Grid> 
+                    <Grid item xs={12}>
+                      <TextField
+                        onChange={(e) => {
+                          setFirstName(e.target.value);
+                        }}
+                        value={firstName}
+                        sx={{ 
+                              width: '25vw',}}
+                        margin="dense"
+                          label="First Name"
+                          InputProps={{
+                          }}
+                    />  
+                    </Grid>  
+                    <Grid item xs={12}>
+                      <TextField
+                        onChange={(e) => {
+                          setLastName(e.target.value);
+                        }}
+                        value={lastName}
+                        sx={{ width: '25vw',}}
+                        margin="dense"
+                          label="Last Name"
+                          InputProps={{
+                          }}
+                    />  
+                    </Grid> 
+                    <Grid item xs={12}>
+                      <TextField
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                        value={email}
+                        sx={{ width: '25vw',}}
+                        margin="dense"
+                          label="E-Mail Address"
+                          InputProps={{
+                          }}
+                    />  
+                    </Grid> 
+                    <Grid item xs={12}>
+                      <TextField
+                        onChange={(e) => {
+                          setUsername(e.target.value);
+                        }}
+                        value={username}
+                        sx={{ width: '25vw',}}
+                        margin="dense"
+                          label="Username"
+                          InputProps={{
+                          }}
+                    />  
+                    </Grid>  
+                    <Grid item xs={12}>
+                      <TextField
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                        value={password}
+                        sx={{ width: '25vw',}}
+                        margin="dense"
+                          label="Password"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton   
+                                  onClick={handleClickShowPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                    />  
+                    </Grid>  
+                  <Grid item xs={12}>
+                      <MButton variant="contained" sx={{width: '25vw', marginBottom: '20px', marginTop: '20px'}} onClick={register}>Register</MButton>
+                  </Grid>
+                  <Grid item xs={12}>
+                      <Typography variant="subtitle1"  sx={{textAlign: 'center'}}>Already have an account?<Link to="/login" sx={{marginLeft: '5px', cursor: 'pointer'}}>Log in</Link></Typography>
+                  </Grid>
+                  </Box>
+                </Grid>                  
+              </Box>
+            </Container>
+          </Box>
+        </Box>                  
     </>
 
   );  
