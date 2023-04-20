@@ -10,7 +10,7 @@ const validateToken = (req, res, next) => {
   }
   try {
     const data = verify(token, process.env.MY_SECRET);
-    req.id = data;
+    req.user = data;
     console.log(data)
     return next();
   } catch (err) {

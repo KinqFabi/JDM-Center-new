@@ -124,7 +124,7 @@ const getUserPosts = async (req, res) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => { //this is storing the file in the images folder
-        callback(null, path.join(__dirname, '../Images'));
+        callback(null, path.join(__dirname, '../../client/public/img'));
     },
 
     filename: (req, file, callback) => { //this is just setting a unique filename

@@ -40,7 +40,7 @@ const login = async (req, res) => {
     const {username, password } = req.body;
 
     const userToLogin = await db.users.findOne({ where: { username: username} });
-    const token = jwt.sign({username: userToLogin.username, id: userToLogin.id} , process.env.MY_SECRET);
+    const token = jwt.sign({username: userToLogin.username, id: userToLogin.id, userPicture: userToLogin.userPicture} , process.env.MY_SECRET);
     //return res.cookie("TEST COOKIE", "Test Cookies", { maxAge: 900000, httpOnly: true })
     //return res.cookie("accessToken", token, {maxAge: 999999,httpOnly: true}).status(200);
     //return res.status(200).send(token);

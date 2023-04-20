@@ -17,39 +17,45 @@ import axios from "axios";
 
 import { AuthContext } from "./helpers/AuthContext";
 
+
 const App = () => {
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
+    image: "",
     status: false,
   });
 
-  /*useEffect(() => {
-    axios.get("http://localhost:3001/api/auth/auth").then((response) => {
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/auth/auth", {withCredentials: true,})
+      .then((response) => {
         if (response.data.error) {
-            alert(response.data.error);
-            setAuthState({...authState, status: false});
-        } 
-        else {
-            setAuthState({
-                username: response.data.username,
-                id: response.data.id,
-                status: true,
-            });
+          setAuthState({ ...authState, status: false });
+        } else {
+          console.log("ALLL DATA!")
+          console.log(response.data)
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            image: response.data.userPicture,
+            status: true,
+          });
         }
-    });
-}, [])*/
+      });
+  }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/addPost" element={<AddPost />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/" element={<Home  /> } />
-      </Routes>
-    </Router>
+    <AuthContext.Provider value={{authState, setAuthState}}>
+      <Router>
+        <Routes>
+          <Route path="/addPost" element={<AddPost />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/" element={<Home user={{...authState}} /> } />
+        </Routes>
+      </Router>
+    </AuthContext.Provider>
   );
 };
 
