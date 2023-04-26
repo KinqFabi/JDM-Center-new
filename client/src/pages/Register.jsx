@@ -20,17 +20,20 @@ import FilledInput from '@mui/material/FilledInput';
 import Link from "@mui/material/Link";
 
 const Register = () => {
-   const [firstName, setFirstName] = useState("");
-   const [lastName, setLastName] = useState("");
-   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userPicture, setUserPicture] = useState("");
+
   const { setAuthState } = useContext(AuthContext);
 
   let navigate = useNavigate();
 
   const register = () => {
-    const data = { username: username, firstName: firstName, lastName: lastName, email: email, password: password };
+    const data = { username: username, firstName: firstName, lastName: lastName, email: email, userPicture: userPicture, password: password };
+    console.log("THIS IS TH DATA: ", data)
     axios.post("http://localhost:3001/api/users/createUser", data).then((response) => {
       if (response.data.error) {
         alert(response.data.error);
@@ -161,6 +164,18 @@ const Register = () => {
                           }}
                     />  
                     </Grid>  
+                    <Grid item xs={12}>
+                          <input 
+                            type="file"
+                            onChange={(e) => {
+                              setUserPicture(e.target.files[0].mozFullPath);
+
+                            }}
+                            
+                          />
+
+
+                    </Grid> 
                     <Grid item xs={12}>
                       <TextField
                         onChange={(e) => {

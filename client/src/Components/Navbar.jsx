@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect,useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 
 import AppBar from '@mui/material/AppBar';
@@ -27,24 +28,17 @@ import MailIcon from '@mui/icons-material/Mail';
 import { autocompleteClasses } from '@mui/material';
 
 
-const Navbar = () => {
+const Navbar = ({user}) => {
 
 
-
+let navigate = useNavigate()
 
     //TODO: Move this code into seperate Profile.jsx file
 
-    const [user, setUser] = useState([])
 
-  /*  useEffect(() => {
-        const getUser = async () => {
-            const {data} = await axios.get(`https://localhost:3001/api/users/${user.id}`)
-            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAA')
-            console.log(data)
-            setUser(data)
-        }
-        getUser()
-    }, [])*/
+    const logout = () => {
+        axios.get("http://localhost:3001/api/auth/logout", {withCredentials: true,})
+      }
     
     
 
@@ -68,8 +62,36 @@ const handleCloseUserMenu = () => {
   setAnchorElUser(null);
 };
 
+
+const navigateToHome = () => {
+    navigate('/')
+}
+const navigateToCreatePost = () => {
+    navigate('/addPost')
+}
+const navigateToDiscover = () => {
+    navigate('/posts')
+}
+const navigateToProfile = () => {
+    navigate('/profile')
+}
+const navigateToSettings = () => {
+    navigate('/settings')
+}
+
+
 const pages = ["Home", "Create Post", "Discover"]
+const pageFunctions = {
+    "Home": navigateToHome,  
+    "Create Post": navigateToCreatePost,
+    "Discover": navigateToDiscover,
+  };
 const settings = ["Profile", "Settings", "Logout"]
+const settingFunctions = {
+    "Profile": navigateToProfile,
+    "Settings": navigateToSettings,
+    "Logout": logout,
+    };
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -110,6 +132,9 @@ const Search = styled('div')(({ theme }) => ({
       },
     },
   }));
+
+  // slices the image in the database to just get the image name.
+  let slicedImage = user.image?.slice(21)
 
 
     return (
@@ -192,8 +217,8 @@ const Search = styled('div')(({ theme }) => ({
                         {pages.map((page) => (
                         <Button
                             key={page}
-                            onClick={handleCloseNavMenu}
-                            sx={{ my: 2, color: 'common.white', display: 'block', ":hover": { color: '#e63946' } }}
+                            onClick={() => { handleCloseNavMenu(); pageFunctions[page](); }}
+                            sx={{ my: 2, color: 'common.white', display: 'block' }}
                         >
                             {page}
                         </Button>
@@ -231,7 +256,7 @@ const Search = styled('div')(({ theme }) => ({
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                            <Avatar alt="Remy Sharp" src={`../../../img/${slicedImage}`} /> 
                         </IconButton>
                         </Tooltip>
                         <Menu
@@ -251,7 +276,7 @@ const Search = styled('div')(({ theme }) => ({
                         onClose={handleCloseUserMenu}
                         >
                         {settings.map((setting) => (
-                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                            <MenuItem key={setting} onClick={() => { handleCloseNavMenu(); settingFunctions[setting](); }}>
                             <Typography textAlign="center">{setting}</Typography>
                             </MenuItem>
                         ))}

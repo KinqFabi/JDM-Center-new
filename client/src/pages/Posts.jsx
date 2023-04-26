@@ -10,17 +10,11 @@ const Posts = () => {
 
     const [listOfPosts, setListOfPosts] = useState([])
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-          axios.get('http://localhost:3001/api/posts/allPosts').then((response) => {
-            setListOfPosts(response.data);
-          });
-        }, 1000); // fetch data every second
     
-        return () => clearInterval(intervalId); // cleanup function to clear interval on unmount
-      }, []);
+    axios.get('http://localhost:3001/api/posts/allPosts').then((response) => {
+    setListOfPosts(response.data);
+    });
     
-
     return (
         <>
             <h1>TEST</h1>

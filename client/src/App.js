@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Posts from "./pages/Posts";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -48,11 +49,12 @@ const App = () => {
     <AuthContext.Provider value={{authState, setAuthState}}>
       <Router>
         <Routes>
-          <Route path="/addPost" element={<AddPost />} />
+          <Route path="/addPost" element={<AddPost user={{...authState}} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/" element={<Home user={{...authState}} /> } />
+          <Route path="/profile" element={<Profile user={{...authState}} />} />
         </Routes>
       </Router>
     </AuthContext.Provider>

@@ -6,42 +6,17 @@ import TextField from '@mui/material/TextField';
 
 
 
-const AddPost = ({ history }) => {
+const AddPost = ({user}) => {
 
 
     const [postTitle, setTitle] = useState('')
-    const [username, setUsername] = useState('')
     const [description, setDescription] = useState('')
     const [postContent, setContent] = useState('')
 
-   /* const addProductHandler = async (e) => {
 
-        e.preventDefault()
-
-        // const data = {
-        //     title: title,
-        //     price: price,
-        //     description: description,
-        //     published: published
-        // }
-
-
-        const formData = new FormData()
-
-
-        formData.append('postContent', postContent)
-        formData.append('postTitle', postTitle)
-        formData.append('username', username)
-        formData.append('description', description)
-
-        await axios.post('http://localhost:3001/api/posts/createPost', formData)
-        console.log(formData)
-        history.push('/posts')
-    
-    }*/
 
     const create = async () => {
-        const data = { postContent: postContent, postTitle: postTitle, username: username, description: description }
+        const data = { postContent: postContent, postTitle: postTitle, username: user.username, description: description, userId: user.id }
         await axios.post('http://localhost:3001/api/posts/createPost', data).then((res) => {
             console.log(res.data)
         })  
@@ -64,10 +39,6 @@ const AddPost = ({ history }) => {
                 setTitle(e.target.value);
                 }}></TextField>
 
-                <TextField margin="normal" fullWidth variant="standard" label="username"
-                type="text" className="password-field" onChange={(e) => {
-                setUsername(e.target.value);
-                }}></TextField>
 
                 <TextField margin="normal" fullWidth variant="standard" label="description"
                 type="text" className="password-field" onChange={(e) => {

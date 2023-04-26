@@ -1,0 +1,3 @@
+Login mit funktionierendem Image Upload
+eine route getBasicInfo machen statt alles mit dem setAuthState zu signen und mitzuschicken (bio, profilepIC, username. etc...)
+Posts nur einmal Laden wenn man die Seite öffnet

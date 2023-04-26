@@ -61,6 +61,7 @@ const createPost = async (req, res) => {
     postTitle: req.body.postTitle,
     username: req.body.username,
     description: req.body.description,
+    userId: req.body.userId
   };
 
   const post = await Post.create(postValues);
@@ -80,6 +81,13 @@ const getPostById = async (req, res) => {
   let post = await Post.findOne({ where: { id: id } });
   res.status(200).send(post);
 };
+
+// get all posts by user id returns an array of posts
+const getPostsByUserId = async (req, res) => {
+  let id = req.params.id;
+  let post = await Post.findAll({ where: { userId: id } });
+  res.status(200).send(post);
+};                             
 
 // update a post by id
 const updatePostById = async (req, res) => {
@@ -142,6 +150,7 @@ module.exports = {
   getAllPosts,
   getPostById,
   updatePostById,
+  getPostsByUserId,
   deletePost,
   getPostComments,
   upload,

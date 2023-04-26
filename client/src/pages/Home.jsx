@@ -14,7 +14,7 @@ import {
   Navigate,
   useNavigate
 } from "react-router-dom";
-import { Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap';
 
 
 const Home = ({user}) => {
@@ -22,6 +22,8 @@ const Home = ({user}) => {
 
 
   let navigate = useNavigate();
+
+  
 
 
 
@@ -44,22 +46,18 @@ const Home = ({user}) => {
   const navToLogin = () => {
     navigate( "/login" );
   }
-
+  
   return (
     <>
         <Container className='mt-5 p-2'>
-        <Navbar></Navbar>
+        <Navbar user={user}></Navbar>
             <h1>Home</h1>
             <hr />
             <h1>ARG</h1>
 
             <MButton variant="primary" type="submit" onClick={navToLogin} >Login</MButton>
             <MButton variant="primary" type="submit" onClick={logout} >Logout</MButton>
-              <Card>
-                <Card.Img variant="top" src={user.userPicture} />
-              </Card>
-            
-            <h1>ladjflkdsajfl</h1>
+
             <h1>{user.username}</h1>
 
         </Container>
